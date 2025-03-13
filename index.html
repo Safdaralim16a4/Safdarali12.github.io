@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safdar Ali - Freelancer Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); color: #fff; line-height: 1.6; position: relative; }
+        #particles-js { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+        #progress-bar { position: fixed; top: 0; left: 0; height: 5px; background: #00ffcc; width: 0; z-index: 1000; transition: width 0.3s ease; }
+        
+        /* Header */
+        header { padding: 1rem 2rem; background: rgba(0, 0, 0, 0.8); display: flex; justify-content: space-between; align-items: center; z-index: 10; }
+        .logo { font-family: 'Orbitron', sans-serif; font-size: 2rem; color: #00ffcc; text-shadow: 0 0 10px #00ffcc; transition: transform 0.3s ease; }
+        .logo:hover { transform: rotate(5deg) scale(1.1); }
+        nav ul { display: flex; list-style: none; }
+        nav ul li { margin-left: 2rem; }
+        nav ul li a { color: #fff; text-decoration: none; font-weight: 600; transition: color 0.3s ease, text-shadow 0.3s ease; }
+        nav ul li a:hover { color: #00ffcc; text-shadow: 0 0 10px #00ffcc; }
+
+        /* Hero Section */
+        .hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 2rem; }
+        .hero-content { max-width: 800px; }
+        .hero h1 { font-family: 'Orbitron', sans-serif; font-size: 4rem; color: #fff; text-shadow: 0 0 20px #00ffcc; }
+        .hero h2 { font-family: 'Orbitron', sans-serif; font-size: 2rem; color: #00ffcc; margin: 1rem 0; }
+        .hero p { font-size: 1.5rem; color: #ddd; }
+        .btn { 
+            --btn-padding-x: 1.5rem; /* Reduced horizontal padding for less width */
+            --btn-padding-y: 1.5rem; /* Vertical padding unchanged */
+            background: #00ffcc; 
+            color: #000; 
+            padding: var(--btn-padding-y) var(--btn-padding-x); 
+            border-radius: 50px; 
+            text-decoration: none; 
+            font-weight: 600; 
+            font-size: 1.5rem; 
+            transition: transform 0.3s ease; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            position: relative; 
+            overflow: hidden; 
+        }
+
+        /* Button Animation (Same as Send Message) */
+        .rocket-btn:hover { transform: scale(1.05); } /* Exact same as Send Message */
+        .rocket-btn { position: relative; }
+        .rocket-btn::before { content: "Hire Me"; opacity: 1; transition: opacity 0.3s ease; }
+        .rocket-btn::after { content: "Get in Touch"; opacity: 0; transition: opacity 0.3s ease; position: absolute; }
+        .rocket-btn:hover::before { opacity: 0; }
+        .rocket-btn:hover::after { opacity: 1; }
+
+        /* Sections */
+        .skills, .experience, .contact { padding: 4rem 2rem; text-align: center; }
+        h2 { font-family: 'Orbitron', sans-serif; font-size: 3rem; color: #00ffcc; margin-bottom: 2rem; text-shadow: 0 0 10px #00ffcc; }
+        .skills-grid, .experience-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
+
+        /* Skill and Experience Cards */
+        .skill-card, .experience-card { perspective: 1000px; }
+        .card-inner { position: relative; width: 100%; height: 200px; transition: transform 0.6s; transform-style: preserve-3d; }
+        .skill-card:hover .card-inner, .experience-card:hover .card-inner { transform: rotateY(180deg); }
+        .card-front, .card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background: rgba(255, 255, 255, 0.1); border-radius: 15px; padding: 2rem; box-shadow: 0 0 15px rgba(0, 255, 204, 0.3); }
+        .card-front { display: flex; align-items: center; justify-content: center; }
+        .card-back { transform: rotateY(180deg); display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        .skill-card h3, .experience-card h3 { font-family: 'Orbitron', sans-serif; font-size: 1.5rem; color: #00ffcc; }
+        .skill-card p, .experience-card p { font-size: 1rem; color: #ddd; }
+        .skill-progress { width: 80%; background: rgba(255, 255, 255, 0.2); border-radius: 5px; height: 10px; margin-top: 1rem; }
+        .skill-progress-bar { height: 100%; background: #00ffcc; border-radius: 5px; transition: width 1.5s ease; }
+
+        /* Contact Section */
+        .contact form { max-width: 600px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem; }
+        .contact input, .contact textarea { padding: 1rem; border: none; border-radius: 10px; background: rgba(255, 255, 255, 0.1); color: #fff; font-size: 1rem; }
+        .contact textarea { min-height: 150px; }
+        .contact button { background: #00ffcc; color: #000; padding: 1rem; border: none; border-radius: 10px; cursor: pointer; transition: transform 0.3s ease; }
+        .contact button:hover { transform: scale(1.05); }
+
+        /* Footer */
+        footer { background: rgba(0, 0, 0, 0.8); padding: 2rem; text-align: center; }
+        footer p { font-size: 1rem; color: #ddd; }
+        footer a { color: #00ffcc; text-decoration: none; }
+        footer a:hover { text-shadow: 0 0 10px #00ffcc; }
+
+        /* Scroll Animation */
+        .animate-on-scroll { opacity: 0; transform: translateY(50px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .animate-on-scroll.visible { opacity: 1; transform: translateY(0); }
+
+        /* Mobile View */
+        @media (max-width: 768px) {
+            header { position: static; padding: 0.5rem 1rem; flex-wrap: wrap; }
+            .logo { font-size: 1.5rem; }
+            nav ul { flex-wrap: wrap; justify-content: center; gap: 1rem; margin-top: 0.5rem; }
+            nav ul li { margin: 0; }
+            .hero h1 { font-size: 2.5rem; }
+            .hero h2 { font-size: 1.5rem; }
+            .hero p { font-size: 1.2rem; }
+            .skills-grid, .experience-grid { grid-template-columns: 1fr; }
+            .skills, .experience, .contact { padding: 2rem 1rem; }
+            h2 { font-size: 2rem; }
+            .card-inner { height: 250px; }
+            .btn { padding: var(--btn-padding-y) 1rem; font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div id="particles-js"></div>
+    <div id="progress-bar"></div>
+
+    <header>
+        <div class="logo">Safdar Ali</div>
+        <nav>
+            <ul>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Safdar Ali</h1>
+            <h2 id="typing-text"></h2>
+            <p>Delivering Precision in Data, IT, and Beyond</p>
+            <a href="#contact" class="btn rocket-btn"></a>
+        </div>
+    </section>
+
+    <section class="skills animate-on-scroll" id="skills">
+        <h2>My Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <div class="card-inner">
+                    <div class="card-front"><h3>Data Entry</h3></div>
+                    <div class="card-back"><p>99% accuracy, 10k+ entries processed.</p><div class="skill-progress"><div class="skill-progress-bar" data-width="95"></div></div></div>
+                </div>
+            </div>
+            <div class="skill-card">
+                <div class="card-inner">
+                    <div class="card-front"><h3>Mechanical Expertise</h3></div>
+                    <div class="card-back"><p>DAE-trained in mechanical systems.</p><div class="skill-progress"><div class="skill-progress-bar" data-width="80"></div></div></div>
+                </div>
+            </div>
+            <div class="skill-card">
+                <div class="card-inner">
+                    <div class="card-front"><h3>IT Proficiency</h3></div>
+                    <div class="card-back"><p>DIT-certified, AI tool enthusiast.</p><div class="skill-progress"><div class="skill-progress-bar" data-width="85"></div></div></div>
+                </div>
+            </div>
+            <div class="skill-card">
+                <div class="card-inner">
+                    <div class="card-front"><h3>Problem Solving</h3></div>
+                    <div class="card-back"><p>Creative tech solutions.</p><div class="skill-progress"><div class="skill-progress-bar" data-width="90"></div></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="experience animate-on-scroll" id="experience">
+        <h2>Experience & Education</h2>
+        <div class="experience-grid">
+            <div class="experience-card">
+                <div class="card-inner">
+                    <div class="card-front"><h3>Data Entry Operator</h3></div>
+                    <div class="card-back"><p>Freelance | Dec 2024 - Present<br>High-speed, error-free data management.</p></div>
+                </div>
+            </div>
+            <div class="experience-card">
+                <div class="card-inner">
+                    <div class="card-front"><h3>DAE Mechanical</h3></div>
+                    <div class="card-back"><p>Diploma in Mechanical Engineering<br>Technical foundation in mechanics.</p></div>
+                </div>
+            </div>
+            <div class="experience-card">
+                <div class="card-inner">
+                    <div class="card-front"><h3>DIT</h3></div>
+                    <div class="card-back"><p>Diploma in Information Technology<br>Skilled in IT and software tools.</p></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contact animate-on-scroll" id="contact">
+        <h2>Contact Me</h2>
+        <form id="contact-form">
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea placeholder="Your Message" required></textarea>
+            <button type="submit" class="btn">Send Message</button>
+        </form>
+    </section>
+
+    <footer>
+        <p>Contact: (+92-315) 068 1007 | <a href="mailto:safdarali@example.com">safdarali@example.com</a></p>
+        <p>© 2025 Safdar Ali. Built with passion.</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Particles.js Fallback
+            if (typeof particlesJS === 'undefined') {
+                console.warn('Particles.js not loaded. Running without particles.');
+            } else {
+                particlesJS("particles-js", {
+                    particles: {
+                        number: { value: 100, density: { enable: true, value_area: 800 } },
+                        color: { value: "#00ffcc" },
+                        shape: { type: "circle" },
+                        opacity: { value: 0.5, random: true },
+                        size: { value: 3, random: true },
+                        move: { enable: true, speed: 2, direction: "none", random: true }
+                    },
+                    interactivity: {
+                        detect_on: "canvas",
+                        events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" } },
+                        modes: { repulse: { distance: 100 }, push: { particles_nb: 4 } }
+                    }
+                });
+            }
+
+            // Typing Effect
+            const typingText = document.getElementById('typing-text');
+            const phrases = ["Freelancer", "Data Specialist", "IT Expert", "Problem Solver"];
+            let phraseIndex = 0;
+            let charIndex = 0;
+
+            function type() {
+                if (charIndex < phrases[phraseIndex].length) {
+                    typingText.textContent += phrases[phraseIndex].charAt(charIndex);
+                    charIndex++;
+                    setTimeout(type, 100);
+                } else {
+                    setTimeout(erase, 2000);
+                }
+            }
+
+            function erase() {
+                if (charIndex > 0) {
+                    typingText.textContent = phrases[phraseIndex].substring(0, charIndex - 1);
+                    charIndex--;
+                    setTimeout(erase, 50);
+                } else {
+                    phraseIndex = (phraseIndex + 1) % phrases.length;
+                    setTimeout(type, 500);
+                }
+            }
+            type();
+
+            // Scroll Progress Bar
+            window.addEventListener('scroll', () => {
+                const scrollTop = window.scrollY;
+                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const scrollPercent = (scrollTop / docHeight) * 100;
+                document.getElementById('progress-bar').style.width = scrollPercent + '%';
+            });
+
+            // Animate Skill Progress Bars
+            const progressBars = document.querySelectorAll('.skill-progress-bar');
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const bar = entry.target;
+                        const width = bar.getAttribute('data-width');
+                        bar.style.width = width + '%';
+                        observer.unobserve(bar);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            progressBars.forEach(bar => observer.observe(bar));
+
+            // Animate Sections
+            const sections = document.querySelectorAll('.animate-on-scroll');
+            const sectionObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        sectionObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            sections.forEach(section => sectionObserver.observe(section));
+
+            // Contact Form Demo
+            document.getElementById('contact-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert('Message sent! (Demo mode)');
+            });
+        });
+    </script>
+</body>
+</html>
